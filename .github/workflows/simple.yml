@@ -12,6 +12,6 @@
         steps:
         - uses: actions/checkout@v2
         - name: Run a one-line script
-          run: "Hello, GitHub Actions!"
+          run: "Hello"
         - name: Print global variable
           run: echo $GLOBAL_VAR
