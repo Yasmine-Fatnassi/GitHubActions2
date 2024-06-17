@@ -3,7 +3,7 @@
     on: [push]
 
     env:
-      GLOBAL_VAR: "This is a global variable
+      GLOBAL_VAR: "This is a global variable"
 
     jobs:
       build:
@@ -12,6 +12,6 @@
         steps:
         - uses: actions/checkout@v2
         - name: Run a one-line script
-          run: Hello, GitHub Actions!
+          run: "Hello, GitHub Actions!"
         - name: Print global variable
           run: echo $GLOBAL_VAR
