@@ -2,6 +2,9 @@
 
     on: [push]
 
+    env:
+      GLOBAL_VAR: "This is a global variable
+
     jobs:
       build:
         runs-on: ubuntu-latest
@@ -10,3 +13,5 @@
         - uses: actions/checkout@v2
         - name: Run a one-line script
           run: Hello, GitHub Actions!
+        - name: Print global variable
+          run: echo $GLOBAL_VAR
