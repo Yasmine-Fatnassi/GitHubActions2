@@ -1,31 +1,29 @@
-name: Conditional Steps Workflow
+name: Issue Workflow
 
-on: [push]
+on:
+  issues:
+    types: [opened, edited, closed]
 
 jobs:
-  build:
+  handle-issue:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Always run this step
-      run: echo "This step always runs"
+    - name: Print issue information
+      run: |
+        echo "Issue number: ${{ github.event.issue.number }}"
+        echo "Issue title: ${{ github.event.issue.title }}"
+        echo "Issue state: ${{ github.event.issue.state }}"
+        echo "Issue body: ${{ github.event.issue.body }}"
 
-    - name: Run this step on main branch
-      if: github.ref == 'refs/heads/master'
-      run: echo "This step runs only on the master branch"
-
-    - name: Run this step if a file has changed
-      if: contains(github.event.head_commit.message, 'Update README.md')
-      run: echo "This step runs if the commit message contains 'Update README.md'"
-
-    - name: Run this step if previous step succeeded
-      if: success()
-      run: echo "This step runs if all previous steps succeeded"
-
-    - name: Run this step if previous step failed
-      if: failure()
-      run: echo "This step runs if the previous step failed"
+    - name: Comment on the issue
+      if: github.event.action == 'opened'
+      uses: peter-evans/create-or-update-comment@v2
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          Thanks for opening this issue! We will look into it as soon as possible.
 
